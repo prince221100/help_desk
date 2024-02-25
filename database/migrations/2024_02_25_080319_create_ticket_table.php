@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->integer('status')->comment('1:open,2:inprogress,3:close');
             $table->date('date');
-            $table->unsignedBigInteger('respond_id');
+            $table->unsignedBigInteger('respond_id')->default('NULL');
 
             $table->foreign('department_id')->references('id')->on('department')->onDelete('cascade');
             $table->foreign('attachment_id')->references('id')->on('attachment')->onDelete('cascade');

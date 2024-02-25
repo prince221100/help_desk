@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('filename');
             $table->string('path');
-            $table->unsignedBigInteger('ticket_id');
-            $table->foreign('ticket_id')->references('ticket_id')->on('tickets')->onDelete('cascade');
+            // $table->unsignedBigInteger('ticket_id');
+            // $table->foreign('ticket_id')->references('ticket_id')->on('tickets')->onDelete('cascade');
         
             $table->timestamps();
         });
