@@ -12,6 +12,25 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function Manager(){
+        return $this->belongsTo(Manager::class,'manager_id','id');
+
+    }
+
+    public function getFirstnameAttribute($value){
+        return ucfirst($value);
+    }
+    public function getLastnameAttribute($value){
+        return ucfirst($value);
+    }
+    public function getEmployeeIdAttribute($value){
+        return ucfirst($value);
+
+    }
+    public function getUsersDepartmentAttribute($value){
+        return ucfirst($value);
+
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -41,6 +60,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+
     ];
 }
