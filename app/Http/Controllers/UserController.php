@@ -31,7 +31,9 @@ class UserController extends Controller
             return redirect('/')->withErrors('Data is not match');
         }else{
             echo "Login Successfully and go to dashboard";
-            session(['email'=>$request->email,'role'=>$request->role]);
+            $name = User::where('email',$request->email)->first();
+            // dd($name->firstname);
+            session(['email'=>$request->email,'role'=>$request->role,'name'=>$name->firstname]);
             return redirect('/dashboard');
         }
 
@@ -39,25 +41,7 @@ class UserController extends Controller
     public function dashboard(){
         // $role = 3;
         if(session()->has('email')){
-            $email = session()->get('email');
-            $role  = session()->get('role');
-            // dd($role);
-            $val = User::where('email',$email)->first();
-            $name = $val->firstname;
-            // dd($val->firstname);
-            if($role == 1){
-                $uname = "Employee";
-                return view('homepage',['uname'=>$uname,'name'=>$name]);
-            }
-            elseif($role == 2){
-                $uname = "IT Admin";
-                return view('homepage',['uname'=>$uname,'name'=>$name]);
-            }
-            else{
-                $uname = "Manager";
-                return view('homepage',['uname'=>$uname,'name'=>$name]);
-
-            }
+            return view('homepage');
         }else{
             return redirect('/');
         }
@@ -159,12 +143,12 @@ class UserController extends Controller
 
     public function add_employee(){
         if(session()->has('email')){
+            $email = session()->get('email');
             $role = session()->get('role');
             if($role == 2){
-                $uname = "IT Admin";
                 $val = Manager::all();
                 // dd($val);
-                return view('addemployee',['uname'=>$uname,'manager'=>$val]);
+                return view('addemployee',['manager'=>$val]);
             }
             else{
                 return redirect('/');
@@ -216,11 +200,11 @@ class UserController extends Controller
     public function show_employee(){
 
         if(session()->has('email')){
+            $email = session()->get('email');
             $role = session()->get('role');
             if($role == 2){
-                $uname = "IT Admin";
                 $val = User::where('role',1)->paginate(10);
-                return view('show_employee',['uname'=>$uname,'data'=>$val]);
+                return view('show_employee',['data'=>$val]);
             }
             else{
                 return redirect('/');
@@ -237,22 +221,7 @@ class UserController extends Controller
             $role = session()->get('role');
             $email = session()->get('email');
             $val = User::where('email',$email)->first();
-            $name = $val->firstname;
-            // dd($val->firstname);
-            if($role == 1){
-                $uname = "Employee";
-                return view('profile',['uname'=>$uname,'name'=>$name,'val'=>$val]);
-            }
-            elseif($role == 2){
-                $uname = "IT Admin";
-                return view('profile',['uname'=>$uname,'name'=>$name,'val'=>$val]);
-            }
-            else{
-                $uname = "Manager";
-                return view('profile',['uname'=>$uname,'name'=>$name,'val'=>$val]);
-
-            }
-
+            return view('profile',['val'=>$val]);
 
         }else{
             return redirect('/');

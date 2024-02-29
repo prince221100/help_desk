@@ -27,7 +27,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        @if ($uname == 'Employee')
+        @if (session()->get('role') == 1)
 
                         <!-- Sidebar -->
                         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -333,7 +333,7 @@
                                         <li class="nav-item dropdown no-arrow">
                                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$name}}</span>
+                                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ session()->get('name')}}</span>
                                                 <img class="img-profile rounded-circle"
                                                     src="admin/img/undraw_profile.svg">
                                             </a>
@@ -366,6 +366,14 @@
                                 <!-- End of Topbar -->
 
                                 <!-- Begin Page Content -->
+                                <div class="container-fluid">
+
+                                    <!-- Page Heading -->
+                                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                        <h1 class="h3 mb-0 text-gray-800">Employee Dashboard</h1>
+                                        {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
+                                    </div>
                                 @yield('content')
                                 <!-- /.container-fluid -->
 
@@ -385,7 +393,7 @@
                         </div>
                         <!-- End of Content Wrapper -->
 
-        @elseif ($uname == 'IT Admin')
+        @elseif (session()->get('role') == 2)
 
                         <!-- Sidebar -->
                         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -692,7 +700,7 @@
                                         <li class="nav-item dropdown no-arrow">
                                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$name}}</span>
+                                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ session()->get('name')}}</span>
                                                 <img class="img-profile rounded-circle"
                                                     src="admin/img/undraw_profile.svg">
                                             </a>
@@ -1050,7 +1058,7 @@
                                         <li class="nav-item dropdown no-arrow">
                                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$name}}</span>
+                                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ session()->get('name')}}</span>
                                                 <img class="img-profile rounded-circle"
                                                     src="admin/img/undraw_profile.svg">
                                             </a>
@@ -1083,6 +1091,14 @@
                                 <!-- End of Topbar -->
 
                                 <!-- Begin Page Content -->
+                                <div class="container-fluid">
+
+                                    <!-- Page Heading -->
+                                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                        <h1 class="h3 mb-0 text-gray-800">Manager Dashboard</h1>
+                                        {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
+                                    </div>
                                 @yield('content')
                                 <!-- /.container-fluid -->
 
