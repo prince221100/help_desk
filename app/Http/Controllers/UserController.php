@@ -68,7 +68,7 @@ class UserController extends Controller
         // dd($chk);
         if($chk == null){
             echo "Data is not Found";
-            return redirect('/forgot_password')->withErrors('Data is not Found');
+            return redirect('/forgot-password')->withErrors('Data is not Found');
         }else{
             echo "send to reset link in Email id";
 
@@ -83,10 +83,10 @@ class UserController extends Controller
                 ]);
                 Mail::to($email)->send(new forgotmail($token));
 
-                return redirect('/forgot_password')->withSuccess('Send to reset Link in Email Id');
+                return redirect('/forgot-password')->withSuccess('Send to reset Link in Email Id');
             }
             else{
-                return redirect('/forgot_password')->withErrors('Please Check Your email! link is already send');
+                return redirect('/forgot-password')->withErrors('Please Check Your email! link is already send');
 
             }
         }
@@ -102,7 +102,7 @@ class UserController extends Controller
             return view('resetform',['token'=>$token,'email'=>$val->email]);
         }else{
 
-            return redirect('/forgot_password')->withErrors('Your token is not set. please send request again!');
+            return redirect('/forgot-password')->withErrors('Your token is not set. please send request again!');
 
         }
 
@@ -136,7 +136,7 @@ class UserController extends Controller
             else{
                 DB::table('password_reset_tokens')->where('email',$email)->delete();
 
-                return redirect("/forgot_password")->withErrors(['msg'=> 'Try Again! Password is not match']);
+                return redirect("/forgot-password")->withErrors(['msg'=> 'Try Again! Password is not match']);
             }
         }
     }
@@ -193,7 +193,7 @@ class UserController extends Controller
         $val->save();
 
         Mail::to($email)->send(new registermail($request));
-        return redirect('/add_employee')->withSuccess('Employee data stored successfully.');
+        return redirect('/show-employee')->withSuccess('Employee data stored successfully.');
 
     }
 
@@ -202,6 +202,7 @@ class UserController extends Controller
         if(session()->has('email')){
             $email = session()->get('email');
             $role = session()->get('role');
+
             if($role == 2){
                 $val = User::where('role',1)->paginate(10);
                 return view('show_employee',['data'=>$val]);
@@ -230,17 +231,128 @@ class UserController extends Controller
     }
 
     public function profile_update(Request $request){
-        // dd($request->all());
         $request->validate([
             'firstname'=>'required',
             'lastname' => 'required',
             'password'=>'required'
 
         ]);
-        $val = User::where('email',$request->email)->first();
-        // dd($val);
+        $email = session()->get('email');
+        // $email = "xyz@gmail.com";
+        // dd($email);
+        $chk = User::where('email',$email)->first();
+        if($chk){
+            // dd($chk->id);
+            $data = User::where(['firstname'=>$request->firstname,'lastname'=>$request->lastname,'password'=>$request->password])->first();
+            // dd($data);
+            if($data){
+                return redirect('/profile')->withErrors('Please check your information.');
+
+            }else{
+
+                $val = User::find($chk->id);
+                $val->firstname = $request->firstname;
+                $val->lastname = $request->lastname;
+                $val->password = $request->password;
+                $val->save();
+
+                return redirect('/profile')->withSuccess('Profile is updated successfully.');
+            }
+        }else{
+            return redirect('/logout');
+        }
+
+    }
+    public function delete_employee($id){
+        // dd($id);
+        if(session()->has('email')){
+            $email = session()->get('email');
+            $role = session()->get('role');
+
+            if($role == 2){
+                $val = User::find($id);
+                // dd($val);
+                $val->delete();
+                return redirect('/show-employee');
+            }
+            else{
+                return redirect('/logout');
+            }
+        }else{
+            return redirect('/');
+        }
+    }
+    public function edit_employee($id){
+        // dd($id);
+        if(session()->has('email')){
+            $email = session()->get('email');
+            $role = session()->get('role');
+
+            if($role == 2){
+                $man = Manager::all();
+
+                $val = User::where('id',$id)->first();
+                // dd($val);
+                return view('edit_employee',['val'=>$val,'manager'=>$man]);
+            }
+            else{
+                return redirect('/logout');
+
+            }
+        }
+        else{
+            return redirect('/');
+
+        }
+
+    }
+    public function edit_employeedata(Request $request,$id){
+        // dd($request->all(),$id);
+        $request->validate([
+            'employeeid' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email'=>'required',
+            'password'=>'required',
+            'department_name' => 'required',
+
+        ]);
+        $chk = User::where('email',$request->email)->first();
+
+        if($chk){
+            $val = User::find($id);
+            $val->employee_id = $request->employeeid;
+            $val->firstname = $request->firstname;
+            $val->lastname = $request->lastname;
+            if($request->managerid){
+                $val->manager_id =$request->managerid;
+            }
+            $val->users_department = $request->department_name;
+            $val->password = $request->password;
+            $val->save();
+            return redirect('/show-employee')->withErrors('Email Id is already Exists!!');
+
+        }else{
+            $val = User::find($id);
+            $val->employee_id = $request->employeeid;
+            $val->firstname = $request->firstname;
+            $val->lastname = $request->lastname;
+
+            $val->email=$request->email;
+
+            if($request->managerid){
+                $val->manager_id =$request->managerid;
+            }
+            $val->users_department = $request->department_name;
+            $val->password = $request->password;
+            $val->save();
+            return redirect('/show-employee')->withSuccess('Employee Data is updated successfully.');
+
+        }
+
 
 
     }
+
 
 }

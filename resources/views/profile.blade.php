@@ -14,6 +14,8 @@
                         <div class="col-md-6 mb-4 pb-2">
 
                         <div class="form-outline ">
+                            <label class="form-label" for="lastName">Employee ID</label>
+
                             <input type="text" class="form-control form-control-lg" id="birthdayDate" placeholder="EmployeeID" name="employeeid" value="{{$val->employee_id}}" disabled/>
 
                         </div>
@@ -26,16 +28,16 @@
                     <div class="col-md-6 mb-4">
 
                         <div class="form-outline">
-                        <input type="text" id="firstName" class="form-control form-control-lg" placeholder="Firstname" name="firstname" value="{{$val->firstname}}" />
-                        {{-- <label class="form-label" for="firstName">First Name</label> --}}
+                            <label class="form-label" for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control form-control-lg" placeholder="Firstname" name="firstname" value="{{$val->firstname}}" />
                         </div>
 
                     </div>
                     <div class="col-md-6 mb-4">
 
                         <div class="form-outline">
-                        <input type="text" id="lastName" class="form-control form-control-lg" placeholder="Lastname" name="lastname" value="{{$val->lastname}}"/>
-                        {{-- <label class="form-label" for="lastName">Last Name</label> --}}
+                            <label class="form-label" for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control form-control-lg" placeholder="Lastname" name="lastname" value="{{$val->lastname}}"/>
                         </div>
 
                     </div>
@@ -45,16 +47,16 @@
                     <div class="col-md-6 mb-4 pb-2">
 
                         <div class="form-outline">
-                        <input type="email" id="emailAddress" class="form-control form-control-lg" placeholder="Email Address" name="email" value="{{$val->email}}" disabled/>
-                        {{-- <label class="form-label" for="emailAddress">Email</label> --}}
+                            <label class="form-label" for="emailAddress">Email</label>
+                            <input type="email" id="emailAddress" class="form-control form-control-lg" placeholder="Email Address" name="email" value="{{$val->email}}" disabled/>
                         </div>
 
                     </div>
                     <div class="col-md-6 mb-4 pb-2">
 
                         <div class="form-outline">
-                        <input type="text" id="phoneNumber" class="form-control form-control-lg" placeholder="Password" name="password" value="{{$val->password}}"/>
-                        {{-- <label class="form-label" for="phoneNumber"></label> --}}
+                            <label class="form-label" for="phoneNumber">Password</label>
+                            <input type="text" id="phoneNumber" class="form-control form-control-lg" placeholder="Password" name="password" value="{{$val->password}}"/>
                         </div>
 
                     </div>
@@ -63,6 +65,8 @@
                         <div class="col-md-6 mb-4 pb-2">
 
                         <div class="form-outline">
+                            <label class="form-label" for="phoneNumber">Manager Name</label>
+
                             <select class="form-control form-control-lg" name="managerid">
                                 <option selected disabled>{{ $val->Manager->name }}</option>
                                 {{-- @foreach ($manager as $data )
@@ -77,7 +81,8 @@
                         <div class="col-md-6 mb-4 pb-2">
 
                             <div class="form-outline">
-                            <input type="text" id="phoneNumber" class="form-control form-control-lg" placeholder="Department Name" name="department_name" value="{{$val->users_department}}" disabled />
+                                <label class="form-label" for="phoneNumber">Department Name</label>
+                                <input type="text" id="phoneNumber" class="form-control form-control-lg" placeholder="Department Name" name="department_name" value="{{$val->users_department}}" disabled />
 
                             </div>
                         </div>
